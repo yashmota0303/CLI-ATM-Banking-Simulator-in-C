@@ -83,74 +83,83 @@ int main()
                 break;
             }
             
-            case 2:  // withdraw money
+            case 2: // Withdraw Money with Anti-Fraud & Cash Dispenser
             { 
                 int withdraw_amt;
 
                 printf("\n--- CASH WITHDRAWAL ---\n");
-                printf("Available Denominations: Rs. 500 | Rs. 200 | Rs. 100\n");
-                printf("Enter amount to withdraw (Multiples of 100): ");
+                printf("Enter amount to withdraw: Rs. ");
                 scanf("%d", &withdraw_amt);
 
-                // Check 1: Non-positive or zero amount
-                if (withdraw_amt <= 0)
-                {
-                    printf("Invalid amount. Please enter a positive value.\n");
-                }
-                // Check 2: Denomination check (Must be a multiple of 100)
-                else if (withdraw_amt % 100 != 0)
-                {
-                    printf("Transaction Denied. Amount must be in multiples of 100 (500, 200, 100 notes available).\n");
-                }
-                // Check 3: Check if total amount exceeds available balance
-                else if (withdraw_amt > balance)
-                {
-                    printf("Transaction Denied. Insufficient balance. Available: Rs. %.2f\n", balance);
-                }
-                // Check 4: Check minimum balance constraint
-                else if (balance - withdraw_amt < min_balance)
-                {
-                    printf("Transaction Denied. You must maintain a minimum balance of Rs. %.2f.\n", min_balance);
-                }
-                // Check 5: Check daily limit constraint
-                else if (daily_withdraw + withdraw_amt > daily_limit)
-                {
-                    printf("Limit Exceeded. Daily withdrawal limit is Rs. %.2f\n", daily_limit);
-                    printf("Maximum remaining amount you can withdraw today: Rs. %.2f\n", daily_limit - daily_withdraw);
-                }
-                // Success: Process Withdrawal & Dispense Cash Notes
-                else 
-                {
-                    // Greedy Algorithm for Note Breakdown
-                    int temp = withdraw_amt;
+                // Standard Validations
+            if (withdraw_amt <= 0) 
+            {
+                printf("Invalid amount.\n");
+            }
+                
+            else if (withdraw_amt % 100 != 0) 
+            {
+                printf("Amount must be in multiples of 100.\n");
+            }
+                
+            else if (withdraw_amt > balance) 
+            {
+                printf("Insufficient balance.\n");
+            }
+            
+            else if (balance - withdraw_amt < min_balance) 
+            {
+                printf("Transaction denied. Must maintain minimum balance of Rs. %.2f\n", min_balance);
+            }
+                
+            else if (daily_withdraw + withdraw_amt > daily_limit) 
+            {
+                printf("Daily limit exceeded.\n");
+            }
+            else 
+            {
+        // --- ANTI-FRAUD VERIFICATION CHECK ---
+        if (withdraw_amt >= (balance * 0.80f)) 
+        {
+            printf("\nANTI-FRAUD ALERT High-value transaction requested.\n");
+            
+            int security_code = (rand() % 9000) + 1000;
+            int user_code, reenter_pin;
 
-                    int notes500 = temp / 500;
-                    temp %= 500;
+            printf("Security Verification Code: %d\n", security_code);
+            printf("Enter Code: ");
+            scanf("%d", &user_code);
 
-                    int notes200 = temp / 200;
-                    temp %= 200;
+            printf("Re-enter PIN to authorize: ");
+            scanf("%d", &reenter_pin);
 
-                    int notes100 = temp / 100;
-
-                    // Update system trackers
-                    balance -= withdraw_amt;
-                    daily_withdraw += withdraw_amt;
-                    last_amt = (float)withdraw_amt;
-                    last_type = 2; // Type 2 = Withdrawal
-
-                    // Print Dispenser Output
-                    printf("\n Successfully withdrew Rs. %d\n", withdraw_amt);
-                    printf("-----------------------------------\n");
-                    if (notes500 > 0) printf("  Rs. 500 Notes : %d\n", notes500);
-                    if (notes200 > 0) printf("  Rs. 200 Notes : %d\n", notes200);
-                    if (notes100 > 0) printf("  Rs. 100 Notes : %d\n", notes100);
-                    printf("-----------------------------------\n");
-                    printf("Updated Balance: Rs. %.2f\n", balance);
-                    printf("Remaining Daily Limit: Rs. %.2f\n", daily_limit - daily_withdraw);
-                }
-
+            if (user_code != security_code || reenter_pin != saved_pin) 
+            {
+                printf("SECURITY BLOCK Verification failed. Transaction canceled.\n");
                 break;
             }
+            printf("VERIFIED Authorization granted.\n");
+        }
+
+        // --- DISPENSE CASH ---
+        int temp = withdraw_amt;
+        int notes500 = temp / 500; temp %= 500;
+        int notes200 = temp / 200; temp %= 200;
+        int notes100 = temp / 100;
+
+        balance -= withdraw_amt;
+        daily_withdraw += withdraw_amt;
+        last_amt = (float)withdraw_amt;
+        last_type = 2;
+
+        printf("\nDISPENSING CASH Total: Rs. %d\n", withdraw_amt);
+        if (notes500 > 0) printf("  Rs. 500 Notes : %d\n", notes500);
+        if (notes200 > 0) printf("  Rs. 200 Notes : %d\n", notes200);
+        if (notes100 > 0) printf("  Rs. 100 Notes : %d\n", notes100);
+        printf("Updated Balance: Rs. %.2f\n", balance);
+    }
+    break;
+}
 
 
             case 3:   //deposit
