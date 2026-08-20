@@ -6,9 +6,7 @@ A feature-packed Command Line ATM &amp; Core Banking Simulator built in C featur
 
 A comprehensive, interactive Command-Line Interface (CLI) ATM application built using Pure C. This project simulates real-world core banking logic, hardware constraints (cash denomination dispenser), security layers (anti-fraud & OTPs), and financial analytics.
 
----
-
-##  Features
+##  Features:
 
 ###  Security & Anti-Fraud
 * **5-Digit Authentication & Account Locking:** Automatically locks account access after 3 consecutive failed login attempts.
@@ -28,27 +26,15 @@ A comprehensive, interactive Command-Line Interface (CLI) ATM application built 
 * **Loan Repayment Option:** Integrated feature to pay back active micro-loan debts.
 * **Account Health & Risk Rating:** Analyzes account parameters in real-time to generate a dynamic **0–100 Financial Health Score** with risk status levels.
 * **Savings Interest Preview:** Previews compound projection over 1-year, 3-year, and 5-year periods.
-* **Last Transaction Tracker:** Retains transaction metadata (type, amount, updated balance) for instant audit retrieval.
+* **Last Transaction Tracker:** Retains transaction metadata (type, amount, updated balance) for instant audit retrieval
 
----
+##  Concepts Used
+- Basic Data Types: int, float, and char.
+- Input and Output: scanf and printf with format specifiers.
+- Conditional Logic: if, else if, and switch-case statements.
+- Iteration: while and for loops.
+- Standard Libraries: stdlib.h for random number generation and time.h for seeding.
+- Math Operations: Modulo (%) and integer division (/) for currency calculations.
 
-## 🛠️ Concepts & Technologies Used
 
-* **Language:** C (C99 / C11)
-* **Standard Libraries:** `<stdio.h>`, `<stdlib.h>`, `<time.h>`, `<math.h>`
-* **Algorithms & Logic:**
-  * Modulo and Integer Division for Greedy Cash Dispensing
-  * Time-seeded Randomization (`srand(time(0))`) for dynamic OTP generation
-  * ANSI Terminal Color Codes for clean UI status feedback
-
----
-
-##  Quick Start & Running Locally
-
-### Prerequisites
-GCC compiler (MinGW for Windows, Clang/GCC for macOS/Linux).
-
-### 1. Clone the repository
-```bash
-git clone [https://github.com/YOUR_USERNAME/Advanced-C-ATM-System.git](https://github.com/YOUR_USERNAME/Advanced-C-ATM-System.git)
-cd Advanced-C-ATM-System
+message me if any bugs found.
